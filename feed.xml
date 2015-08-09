@@ -10,9 +10,9 @@
     <language>en</language>
     <item>
       <title>Angular Component Composition - Part 1 - Introduction</title>
-      <link>http://nicholasboll.github.io/blogarticles/angular-component-composition-part-1/</link>
+      <link>http://nicholasboll.github.io/blog/articles/angular-component-composition-part-1/</link>
       <pubDate>Sat, 08  Aug 2015 15:00:00 -0600</pubDate>
-      <guid isPermaLink="true">http://nicholasboll.github.io/blogarticles/angular-component-composition-part-1/</guid>
+      <guid isPermaLink="true">http://nicholasboll.github.io/blog/articles/angular-component-composition-part-1/</guid>
       <author></author>
       <description>&lt;h2 id=&quot;components&quot;&gt;Components&lt;/h2&gt;
 &lt;p&gt;“Components” is becoming a popular word in web development. The term is vague and generally means small parts. I did a talk recently at a &lt;a href=&quot;http://www.meetup.com/RockyMountainAngularJS/events/223604028/&quot;&gt;local meetup&lt;/a&gt; (video &lt;a href=&quot;https://www.youtube.com/watch?v=BYVesUiUpI4&quot;&gt;here&lt;/a&gt;) about how we at &lt;a href=&quot;https://www.logrhythm.com&quot;&gt;LogRhythm&lt;/a&gt; use Angular to create re-usable components. The definition of components extends to backend infrastructure, middle-layer and UI. This series will be mainly focusing on UI components.&lt;/p&gt;
