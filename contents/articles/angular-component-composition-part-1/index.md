@@ -4,6 +4,7 @@ author: nicholas-boll
 date: 2015-08-08 15:00
 template: article.jade
 tags: angular,javascript,component,composition
+comments: true
 ---
 
 ## Components

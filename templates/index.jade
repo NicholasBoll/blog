@@ -2,17 +2,6 @@ extends layout
 
 block content
   include author
-  nav
-    - var allTags = env.helpers.getAllTags()
-    if tagName
-      span.main
-        span.prompt Showing all articles in
-        span.big-tag= tagName
-    else
-      h3 Tags
-      span.sub
-        each tag in allTags
-          a.big-tag(href=env.helpers.getTagHome(tag).url)= tag
   each article in articles
     article.article.intro
       header
@@ -26,6 +15,17 @@ block content
         if article.hasMore
           p.more
             a(href=article.url) more
+    nav
+      - var allTags = env.helpers.getAllTags()
+      if tagName
+        span.main
+          span.prompt Showing all articles in
+          span.big-tag= tagName
+      else
+        h3 Tags
+        span.sub
+          each tag in allTags
+            a.big-tag(href=env.helpers.getTagHome(tag).url)= tag
 
 block prepend footer
   div.nav
