@@ -191,7 +191,7 @@ function DropdownComponent () {
   };
 }
 ```
-Like the tooltip component in the introduction, the link function is large here as well. The component uses a factory function that returns a Directive Definition Object. I will use this pattern until something like [angular.compoent](https://github.com/angular/angular.js/issues/10007) is released. I'll note some choices here:
+Like the tooltip component in the introduction, the link function is large here as well. The component uses a factory function that returns a Directive Definition Object. I will use this pattern until something like [angular.component](https://github.com/angular/angular.js/issues/10007) is released. I'll note some choices here:
 
 ### Restrict
 ```js
@@ -238,7 +238,7 @@ return {
 The template contains a `ui-dropdown-button` helper directive to attach events to effect the state of the component. Composition can be parent/child.
 
 ### Link
-The link function is broken into a `pre` and `post` link. It is currently considered bad practice to ever use `compile` or `preLink`, but `pre` and `post` link have an important distinction between when they get called in the lifecycle of compiling child components. `preLink` on a parent gets called *before* the `preLink` of a child. `postLink` on a parent gets called *after* the `postLink` of a child. You can find more information about the lifecycle of linking [here](http://www.jvandemo.com/the-nitty-gritty-of-compile-and-link-functions-inside-angularjs-directives/).
+The link function is broken into a `pre` and `post` link. It is currently considered bad practice to ever use `compile` or `preLink`, but `pre` and `post` link have an important distinction between when they get called in the lifecycle of compiling child components. `preLink` on a parent gets called *before* the `preLink` of a child. `postLink` on a parent gets called *after* the `postLink` of a child. You can find more information about the lifecycle of directives [here](http://www.jvandemo.com/the-nitty-gritty-of-compile-and-link-functions-inside-angularjs-directives/).
 
 The `preLink` function sets up model/$scope listeners. The `preLink` also composes components - this is a little strange that controllers don't get this information (yet), but it is how we have to do it for now. The `preLink` fires right after the `controller` instantiates - which guarantees the component's controller is in the correct state for any child components. The dropdown also sets up `ngModel` hookups if present.
 
@@ -316,4 +316,4 @@ Here is an example component in our application:
 This is the dropdown component with a `distinct-value` decorator that gets distinct `alarmStatus` field values from the server - the guts of this decorator are very similar to the dynamic decorator shown earlier. The `lucene-query` decorator is optionally required by the `distinct-value` decorator to modify the query made to the server. There is actually many of these dropdowns on the page - all working together to create a filtered query for a result set. My recorded talk goes over this at [23:55](https://www.youtube.com/watch?v=BYVesUiUpI4&feature=youtu.be&t=1435)
 
 ## Conclusion
-Component composition is a bit difficult in Angular 1.x, but very powerful. It allows us to compose smaller pieces together to make something very useful.
+Component composition is a bit difficult in Angular 1.x, but very powerful. It allows us to compose smaller pieces together to make something very useful. We have dropdowns that get options from different sources and just have different decorators to talk to backend endpoints. This allows the page controller to not have to worry about getting data to the dropdowns, but only care about the values of each dropdown. It keeps concerns at the right level.
