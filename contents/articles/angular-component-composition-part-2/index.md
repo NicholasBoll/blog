@@ -141,9 +141,10 @@ function DropdownComponent () {
         {{ dropdown.model.display || dropdown.model.placeholder }}
       </button>
       <div class="options-container" ng-if="dropdown.model.isOpened">
-        <ul class="options">
+        <ul class="options" role="menu">
           <li
             class="option"
+            role="menuitem"
             ng-repeat="item in dropdown.model.options"
             ng-mouseover="dropdown.setIntent(item)"
             ng-class="{intent: dropdown.isIntent(item)}"
