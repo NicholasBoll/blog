@@ -12,6 +12,8 @@ This article builds on [Part 1 - Introduction](../angular-component-composition-
 
 The introduction built a very simple component to showcase the idea of component composition. Now we will go in-depth starting with a dropdown component. There are many examples of dropdowns available, but this is going to be a minimalistic component that will be very easy to extend.
 
+<iframe src="http://embed.plnkr.co/vsgsWlX1cYipgLW5JRYm/preview" width="100%" height="350px"></iframe>
+
 ## Composition
 I like the Angular Bootstrap project because components there are very composable, but also very difficult to read. Here is an example from [UI Bootstrap](https://angular-ui.github.io/bootstrap/#/dropdown).
 
