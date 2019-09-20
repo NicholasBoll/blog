@@ -159,6 +159,8 @@ cy.tab()
   .should("have.text", "Delete"); // this fails because the subject is now undefined
 ```
 
+<img src="./img/cypress-modal-tab-undefined-subject.png" alt="Cypress tab returns undefined in focus trap" loading="lazy" />
+
 The workaround is to force `cy.tab` to always return the currently focused element in the document:
 
 ```ts
