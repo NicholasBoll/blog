@@ -9,13 +9,19 @@ comments: true
 
 ## Testing with the tab key in Cypress
 
+### Using cy.type
+
 As part of testing an accessible modal we need to trap focus inside the element with the `role=dialog`. This involves hitting the tab key. Unfortunately, Cypress doesn't support the tab key. When you try `cy.type('{tab}')`, Cypress gives a nice warning message:
 
 ```
 CypressError: {tab} isn't a supported character sequence. You'll want to use the command cy.tab(), which is not ready yet, but when it is done that's what you'll use.
 ```
 
+### Using a cy.tab plugin
+
 Fortunately, there is a nice plugin to support `cy.tab()` that is created by a member of the Cypress team: [cypress-plugin-tab](https://github.com/Bkucera/cypress-plugin-tab). This was working quite well. I was able to finish off my tests without issue until I ran into a new edge case for modals that don't have the close icon.
+
+### Header with tabIndex=-1
 
 According to the [specification](https://www.w3.org/WAI/GL/wiki/Using_ARIA_role%3Ddialog_to_implement_a_modal_dialog_box#Note_on_focus_management), focus should be transferred to the dialog (or something inside) and focus should be held there until the dialog is dismissed. I'm using [react-focus-trap](https://github.com/davidtheclark/focus-trap-react) which uses [tabbable](https://github.com/davidtheclark/tabbable) under the hood to understand where focus should go. The ARIA spec suggests the `role=dialog` can receive focus by setting the `tabindex="-1"`. This works - the element can now receive focus when `element.focus()` is called and when you hit the tab key, the next item in the modal will receive focus properly.
 
@@ -45,6 +51,8 @@ Error: [cypress-plugin-tab]:
         - Use cy.get('body').tab() if you wish to tab into the first element on the page
         - Use cy.focused().tab() if you wish to tab into the currently active element
 ```
+
+### Header with tabIndex=0
 
 Our workaround involves instead setting the tab index to be `0` instead and remove the tab index on blur. This should make `cy.tab` happy.
 
@@ -135,3 +143,29 @@ Cypress.Commands.overwrite("tab", (originalFn, subject) => {
 Now the tests pass consistently. The side effect of this change is you can now the focus shifting during the test. I've slowed it down to see the effect:
 
 <img src="./img/cypress-modal-working.gif" alt="Cypress Modal Working" loading="lazy" />
+
+**Update:** This issue was fixed in https://github.com/Bkucera/cypress-plugin-tab/pull/7! No modification needed.
+
+### Tab key inside a focus trap
+
+Another issue I ran into was using `cy.tab` with the `focus-trap`. Focus trap works by cancelling the `keydown` event to prevent the browser from switching focus outside the trap. `cy.tab` returns an `undefined` subject in this case preventing correct chaining. This is how `cy.tab` currently handles cancelled `keydown` events.
+
+For example:
+
+```ts
+cy.tab()
+  .should("have.text", "Cancel")
+  .tab()
+  .should("have.text", "Delete"); // this fails because the subject is now undefined
+```
+
+The workaround is to force `cy.tab` to always return the currently focused element in the document:
+
+```ts
+Cypress.Commands.overwrite("tab", (originalFn, subject) => {
+  return originalFn(subject).then(
+    // return subject if defined else return current focused element
+    s => s || cy.state("window").document.activeElement
+  );
+});
+```
