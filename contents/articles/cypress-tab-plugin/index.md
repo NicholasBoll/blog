@@ -171,3 +171,5 @@ Cypress.Commands.overwrite("tab", (originalFn, subject) => {
   );
 });
 ```
+
+**Update:** This issue was fixed in https://github.com/Bkucera/cypress-plugin-tab/pull/9!
