@@ -5,7 +5,7 @@
   },
   "devDependencies": {
     "moment": "^2.24.0",
-    "shelljs": "^0.5.1",
+    "shelljs": "^0.8.5",
     "typogr": "0.5.x",
     "underscore": "1.4.x",
     "wintersmith": "^2.2.0",
